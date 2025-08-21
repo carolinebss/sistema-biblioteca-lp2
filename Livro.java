@@ -9,11 +9,9 @@ public class Livro {
         this.ano = ano;
     }
 
-    
     public String getTitulo() {
         return titulo;
     }
-
 
     public void setTitulo(String titulo) {
         if (titulo == ""){
@@ -23,21 +21,21 @@ public class Livro {
         }
     }
 
-
     public String getAutor() {
         return autor;
     }
 
-
     public void setAutor(String autor) {
-        this.autor = autor;
+        if (autor == "") {
+            System.out.println("Erro: autor inválido");
+        } else {
+            this.autor = autor;
+        }
     }
-
 
     public int getAno() {
         return ano;
     }
-
 
     public void setAno(int ano) {
         int ano_atual = 2025;
@@ -47,7 +45,6 @@ public class Livro {
             this.ano = ano;
         }
     }
-
 
     @Override
     public String toString() {
