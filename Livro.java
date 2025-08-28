@@ -49,8 +49,15 @@ public class Livro {
     @Override
     public String toString() {
         return "Livro{" + 
-        "titulo='"
-        super.toString();
+        "titulo='" + titulo + '\'' + 
+        
+    }
+    public StatusLivro getStatus() {
+        return status;
+
+    }
+    public void setStatus(StatusLivro status) {
+        this.status = status;
     }
     
 }
