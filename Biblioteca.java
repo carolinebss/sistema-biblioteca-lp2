@@ -1,65 +1,63 @@
-public class Livro {
-    private String titulo;
-    private String autor;
-    private int ano; 
+import java.util.ArrayList;
+import java.util.List;
 
-    public Livro(String titulo, String autor, int ano) {
-        this.titulo = titulo;
-        this.autor = autor;
-        this.ano = ano;
-    }
+public class Biblioteca {
+        private List<Livro> acervo;
+        private List<Usuario> ListadeUsuarios;
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        if (titulo == ""){
-            System.out.println("Erro: titulo inválido");
-        } else {
-            this.titulo = titulo;
+        public Biblioteca() {
+            this.acervo = new ArrayList<>();
+            this.ListadeUsuarios = new ArrayList<>();
         }
-    }
-
-    public String getAutor() {
-        return autor;
-    }
-
-    public void setAutor(String autor) {
-        if (autor == "") {
-            System.out.println("Erro: autor inválido");
-        } else {
-            this.autor = autor;
+        public void pesquisaPorTitulo(String titulo) {
+            for(Livro livro : this.acervo){
+                if(livro.getTitulo().toLowerCase().equalsIgnoreCase(titulo)){
+                    return livro;
+                }
+            }
+            return null;
         }
-    }
+        public List<Livro> pesquisarLivroPorTermo(String termo) {
+            List<Livro> listaDeLivros = new ArrayList<>();
+            for(Livro livro : acervo) {
+                if(livro.getTitulo().toLowerCase().contains(termo.toLowerCase())) {
+                    listaDeLivros.add(livro)
+                }
+            }
 
-    public int getAno() {
-        return ano;
-    }
-
-    public void setAno(int ano) {
-        int ano_atual = 2025;
-        if (ano > ano_atual) {
-            System.out.println("Erro: ano inválido.");
-        } else {
-            this.ano = ano;
         }
+        public void listarAcervo() {
+            for(Livro livro : acervo) {
+                System.out.println(livro);
+            }
+
+        }
+
+        public void cadastratrarLivro(Livro livro) {
+            this.acervo.add(livro);
+            System.out.println("O livro" + livro.getTitulo() + "foi cadastrado");
+
+        }
+        public void cadastratrarUsuario(Usuario usuario) {
+            this.ListadeUsuarios.add(usuario);
+            System.out.println("O Usuario" + usuario.getNome() + "foi cadastrado");
+
+        }
+        public void main(String[] args) {
+            Livro livro1 = new Livro("Como destruir a sua vida", "Caroline Barbosa", 2025);
+            Usuario meuUsuario = new Usuario("Caroll", "123");
+            Biblioteca minhaBiblioteca = new Biblioteca();
+            minhaBiblioteca.cadastratrarLivro(livro1);
+            minhaBiblioteca.cadastratrarUsuario(meuUsuario);
+            List<Livro> resultado = minhaBiblioteca.pesquisarLivroPorTermo("java");
+            for (var livro : resultado) {
+                System.out.println("Livros encontrados");
+                System.out.println(livro);
+            }
+
+           
     }
 
-    @Override
-    public String toString() {
-        return "Livro{" + 
-        "titulo='" + titulo + '\'' + 
-        
-    }
-    public StatusLivro getStatus() {
-        return status;
 
     }
-    public void setStatus(StatusLivro status) {
-        this.status = status;
-    }
-    
-}
-
 
