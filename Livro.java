@@ -2,11 +2,12 @@ public class Livro {
     private String titulo;
     private String autor;
     private int ano; 
+    private StatusLivro status;
 
     public Livro(String titulo, String autor, int ano) {
-        this.titulo = titulo;
-        this.autor = autor;
-        this.ano = ano;
+        setTitulo(titulo)
+        setAutor(autor)
+        setAno(ano)
     }
 
     public String getTitulo() {
@@ -48,8 +49,7 @@ public class Livro {
 
     @Override
     public String toString() {
-        return "Livro{" + 
-        "titulo='" + titulo + '\'' + 
+        return "Livro '" + titulo "', de"  + autor + " (" + ano + ") - Status: " + status;
         
     }
     public StatusLivro getStatus() {
