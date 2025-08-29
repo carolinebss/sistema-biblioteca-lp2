@@ -5,9 +5,10 @@ public class Livro {
     private StatusLivro status;
 
     public Livro(String titulo, String autor, int ano) {
-        setTitulo(titulo)
-        setAutor(autor)
-        setAno(ano)
+        setTitulo(titulo);
+        setAutor(autor);
+        setAno(ano);
+        this.status = StatusLivro.DISPONIVEL;
     }
 
     public String getTitulo() {
@@ -46,12 +47,12 @@ public class Livro {
             this.ano = ano;
         }
     }
-
+    
     @Override
     public String toString() {
-        return "Livro '" + titulo "', de"  + autor + " (" + ano + ") - Status: " + status;
-        
+         return "Livro '" + titulo + "', de " + autor + " (" + ano + ") - Status: " + status;
     }
+    
     public StatusLivro getStatus() {
         return status;
 
@@ -61,5 +62,3 @@ public class Livro {
     }
     
 }
-
-
