@@ -1,55 +1,64 @@
-import java.util.Objects;
+public class Livro {
+    private String titulo;
+    private String autor;
+    private int ano; 
+    private StatusLivro status;
 
-public class Usuario {
-        private String nome;
-        private String id;
-    
-        public Usuario(String nome, String id) {
-            this.nome = nome;
-            this.id = id;
-        }
+    public Livro(String titulo, String autor, int ano) {
+        setTitulo(titulo);
+        setAutor(autor);
+        setAno(ano);
+        this.status = StatusLivro.DISPONIVEL;
+    }
 
-        public String getNome() {
-            return nome;
-        }
+    public String getTitulo() {
+        return titulo;
+    }
 
-        public void setNome(String nome) {
-            if(nome.isEmpty()){
-                System.out.println("Erro: valor inválido");
-            } else {
-                this.nome = nome;
-            }
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            if(id.isEmpty()){
-                System.out.println("Erro: valor inválido"); 
-            } else {
-                this.id = id;
-            }
-        }
-
-        @Override
-            public String toString() {
-                return "Usuario{" +
-                "nome='" + nome + '\'' +
-                ", id='" + id + '\'' +
-                '}';
-            }
-
-        @Override
-            public boolean equals(Object o) {
-                if (o == null || getClass() != o.getClass()) return false;
-                Usuario usuario = (Usuario) o;
-                return Objects.equals(id, usuario.id);
-            }
-
-        @Override
-        public int hashCode() {
-            return Objects.hashCode(id);
+    public void setTitulo(String titulo) {
+        if (titulo == ""){
+            System.out.println("Erro: titulo inválido");
+        } else {
+            this.titulo = titulo;
         }
     }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        if (autor == "") {
+            System.out.println("Erro: autor inválido");
+        } else {
+            this.autor = autor;
+        }
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        int ano_atual = 2025;
+        if (ano > ano_atual) {
+            System.out.println("Erro: ano inválido.");
+        } else {
+            this.ano = ano;
+        }
+    }
+    
+    @Override
+    public String toString() {
+         return "Livro '" + titulo + "', de " + autor + " (" + ano + ") - Status: " + status;
+    }
+    
+    public StatusLivro getStatus() {
+        return status;
+
+    }
+    public void setStatus(StatusLivro status) {
+        this.status = status;
+    }
+    
+}
