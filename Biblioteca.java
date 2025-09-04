@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Biblioteca {
-        private List<Livro> acervo;
+        private List<ItemDoAcervo> acervo;
         private List<Usuario> ListadeUsuarios;
         private List<Emprestimo> registrosDeEmprestimos;
         private static final int PRAZO_EMPRESTIMO_DIAS = 14;
         private static final double VALOR_MULTA_POR_DIA = 0.75;
-        private Emprestimo buscarEmprestimoAtivoPorLivro(Livro livro);
+        
     
 
         public Biblioteca() {
-            this.acervo = new ArrayList<>();,
+            this.acervo = new ArrayList<>();
             this.ListadeUsuarios = new ArrayList<>();
             this.registrosDeEmprestimos = new ArrayList<>();
         }
@@ -24,26 +24,26 @@ public class Biblioteca {
                 System.out.println("Erro: esse usuário não está cadastrado.");
                 return;
             }
-            Livro livroDoEmprestimo = pesquisarLivroPorTitulo(titulo);
-            if(livroDoEmprestimo == null) {
+            ItemDoAcervo itemDoEmprestimo = pesquisarItemPorTitulo(titulo);
+            if(itemDoEmprestimo == null) {
                 System.out.println("Erro: esse livro não existe.");
                 return;
             }
-            if(livroDoEmprestimo.getStatus() == StatusLivro.EMPRESTADO) {
+            if(itemDoEmprestimo.getStatus() == StatusLivro.EMPRESTADO) {
                 System.out.println("Erro: esse livro já está emprestado.");
                 return;
             }
-            livroDoEmprestimo.setStatus(StatusLivro.EMPRESTADO);
+            itemDoEmprestimo.setStatus(StatusLivro.EMPRESTADO);
             LocalDate dataEmprestimo = LocalDate.now();
             LocalDate dataDevolucaoPrevista = dataEmprestimo.plusDays(PRAZO_EMPRESTIMO_DIAS);
-            Emprestimo emprestimo = new Emprestimo(livroDoEmprestimo, usuarioDoEmprestimo, dataEmprestimo, LocalDate.now());
+            Emprestimo emprestimo = new Emprestimo(itemDoEmprestimo, usuarioDoEmprestimo, dataEmprestimo, LocalDate.now());
             registrosDeEmprestimos.add(emprestimo);
             System.out.println("Emprestimo cadastrado com sucesso.");
         }
 
-        public Emprestimo buscarEmprestimoAtivoPorLivro(Livro livro) {
+        public Emprestimo buscarEmprestimoAtivoPorItem(ItemDoAcervo item) {
             for (Emprestimo emprestimo: registrosDeEmprestimos) {
-                if(emprestimo.getLivro().getTitulo().equalsIgnoreCase(livro.getTitulo())){
+                if(emprestimo.getItem().getTitulo().equalsIgnoreCase(item.getTitulo())){
                   if(emprestimo.getDataDevolucaoPrevista() == null) {
                     return emprestimo;
                   }
@@ -53,12 +53,12 @@ public class Biblioteca {
         }
 
         public void realizarDevolucao(String titulo) {
-            Livro livro = pesquisarLivroPorTitulo(titulo);
-            if (livro == null) {
-                System.out.println("Erro: esse livro não está cadastrado.");
+            ItemDoAcervo item = pesquisarItemPorTitulo(titulo);
+            if (item == null) {
+                System.out.println("Erro: esse Item não está cadastrado.");
                 return;
             }
-            Emprestimo emprestimo = buscarEmprestimoAtivoPorLivro(livro);
+            Emprestimo emprestimo = buscarEmprestimoAtivoPorItem(item);
             if(emprestimo == null) {
                 System.out.println("Esse emprestimo não existe.");
             }
@@ -69,9 +69,9 @@ public class Biblioteca {
                 double multa = dias * VALOR_MULTA_POR_DIA;
                 System.out.println("Você precisou pegar uma multa de R$" + multa);
             } else {
-                System.out.println("Livro devolvido.");
+                System.out.println("Item devolvido.");
             }
-            emprestimo.getLivro().setStatus(StatusLivro.DISPONIVEL);
+            emprestimo.getItem().setStatus(StatusLivro.DISPONIVEL);
             emprestimo.setDataDevolucaoPrevista(hoje);
 
         }
@@ -84,35 +84,35 @@ public class Biblioteca {
             }
             return null;
         }
-        public Livro pesquisarLivroPorTitulo(String titulo) {
-            for(Livro livro : this.acervo){
-                if(livro.getTitulo().toLowerCase().equalsIgnoreCase(titulo)){
-                    return livro;
+        public ItemDoAcervo pesquisarItemPorTitulo(String titulo) {
+            for(ItemDoAcervo item : this.acervo){
+                if(item.getTitulo().toLowerCase().equalsIgnoreCase(titulo)){
+                    return item;
                 }
             }
             return null;
         }
 
-        public List<Livro> pesquisarLivroPorTermo(String termo) {
-            List<Livro> listaDeLivros = new ArrayList<>();
-            for(Livro livro : acervo) {
-                if(livro.getTitulo().toLowerCase().contains(termo.toLowerCase())) {
-                    listaDeLivros.add(livro);
+        public List<ItemDoAcervo> pesquisarItemPorTermo(String termo) {
+            List<ItemDoAcervo> ItemDoAcervo = new ArrayList<>();
+            for(ItemDoAcervo item : acervo) {
+                if(item.getTitulo().toLowerCase().contains(termo.toLowerCase())) {
+                    ItemDoAcervo.add(item);
                 }
             }
-            return listaDeLivros;
+            return ItemDoAcervo;
         }
 
         public void listarAcervo() {
             System.out.println("Livros no Acervo");
-            for(Livro livro : acervo) {
-                System.out.println(livro);
+            for(ItemDoAcervo item : acervo) {
+                System.out.println(item);
             }
         }
     
-        public void cadastratrarLivro(Livro livro) {
-            this.acervo.add(livro);
-            System.out.println("O livro" + livro.getTitulo() + "foi cadastrado");
+        public void cadastratrarItem(ItemDoAcervo item) {
+            this.acervo.add(item);
+            System.out.println("O item" + item.getTitulo() + "foi cadastrado");
         }
 
         public void cadastratrarUsuario(Usuario usuario) {
@@ -120,24 +120,27 @@ public class Biblioteca {
             System.out.println("O Usuario" + usuario.getNome() + "foi cadastrado");
         }
         public static void main(String[] args) {
-            Livro livroJavaComoProgramar = new Livro("Java como Programar", "Deitel", 2014);
-            Livro livroDestruirVida = new Livro("Como destruir sua vida", "Caroline Barbosa", 2025);
+            Livro livroJavaComoProgramar = new Livro("Java como Programar", 2014, "Deitel");
+            Livro livroDestruirVida = new Livro("Como destruir sua vida", 2025, "Caroline Barbosa");
             Usuario meuUsuario = new Usuario("Anna Caroline", "030");
             Biblioteca minhaBiblioteca = new Biblioteca();
-            minhaBiblioteca.cadastratrarLivro(livroJavaComoProgramar);
-            minhaBiblioteca.cadastratrarLivro(livroDestruirVida);
+            minhaBiblioteca.cadastratrarItem(livroJavaComoProgramar);
+            minhaBiblioteca.cadastratrarItem(livroDestruirVida);
             minhaBiblioteca.cadastratrarUsuario(meuUsuario);
             minhaBiblioteca.listarAcervo();
             minhaBiblioteca.realizarEmprestimo("123", "Java como Porgramar");
             minhaBiblioteca.listarAcervo();
             minhaBiblioteca.realizarDevolucao("Java como Porgramar");
             minhaBiblioteca.listarAcervo();
+            Revista revistaVeja = new Revista("Veja - Abril", 2015 , 1);
+            System.out.println(revistaVeja);
+            System.out.println(livroDestruirVida);
 
-            List<Livro> resultado = minhaBiblioteca.pesquisarLivroPorTermo("java");
-            for (var livro : resultado) {
-                System.out.println("Livros encontrados");
-                System.out.println(livro);
-            }
+            List<ItemDoAcervo> resultado = minhaBiblioteca.pesquisarItemPorTermo("java");
+           for (ItemDoAcervo item : resultado) {
+               System.out.println("Livros encontrados");
+                System.out.println(item);
+           }
             minhaBiblioteca.listarAcervo();
     }
 }
