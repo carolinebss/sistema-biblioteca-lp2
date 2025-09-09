@@ -36,8 +36,8 @@ public class ItemDoAcervo {
     
     public StatusLivro getStatus() {
         return status;
-
     }
+   
     public void setStatus(StatusLivro status) {
         this.status = status;
     }
