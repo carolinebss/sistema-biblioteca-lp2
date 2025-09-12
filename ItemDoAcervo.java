@@ -1,31 +1,18 @@
 public class ItemDoAcervo {
-    protected String titulo;
-    protected int ano; 
-    protected StatusLivro status;
+    private String titulo;
+    private int ano; 
+    private StatusLivro status;
 
     public ItemDoAcervo(String titulo, int ano) {
         setTitulo(titulo);
         setAno(ano);
-        this.status = StatusLivro.DISPONIVEL;
+        status = StatusLivro.DISPONIVEL;
     }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        if (titulo == ""){
-            System.out.println("Erro: titulo inválido");
-        } else {
-            this.titulo = titulo;
-        }
-    }
-
-    public int getAno() {
+    public String getAno() {
         return ano;
     }
 
-    public void setAno(int ano) {
+     public void setAno(int ano) {
         int ano_atual = 2025;
         if (ano > ano_atual) {
             System.out.println("Erro: ano inválido.");
@@ -33,15 +20,26 @@ public class ItemDoAcervo {
             this.ano = ano;
         }
     }
-    
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        if (titulo == "") {
+            System.out.println("Erro: título inválido.");
+        } else {
+            this.titulo = titulo;
+        }
+    }
+
     public StatusLivro getStatus() {
         return status;
     }
-   
+
     public void setStatus(StatusLivro status) {
         this.status = status;
     }
-    
 
 }
 
