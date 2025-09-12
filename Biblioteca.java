@@ -9,8 +9,6 @@ public class Biblioteca {
         private List<Emprestimo> registrosDeEmprestimos;
         private static final int PRAZO_EMPRESTIMO_DIAS = 14;
         private static final double VALOR_MULTA_POR_DIA = 0.75;
-        
-    
 
         public Biblioteca() {
             this.acervo = new ArrayList<>();
@@ -39,8 +37,11 @@ public class Biblioteca {
             Emprestimo emprestimo = new Emprestimo(itemDoEmprestimo, usuarioDoEmprestimo, dataEmprestimo, LocalDate.now());
             registrosDeEmprestimos.add(emprestimo);
             System.out.println("Emprestimo cadastrado com sucesso.");
-        }
-
+            System.out.println("O item '"+itemDoEmprestimo.getTitulo()
+                +"' foi emprestado para o usuário " + usuarioDoEmprestimo.getNome()
+                +" na data " + emprestimo.getDataEmprestimo()
+                +" e tem de ser devolvido em " + emprestimo.getDataDevolucaoPrevista());
+    }
         public Emprestimo buscarEmprestimoAtivoPorItem(ItemDoAcervo item) {
             for (Emprestimo emprestimo: registrosDeEmprestimos) {
                 if(emprestimo.getItem().getTitulo().equalsIgnoreCase(item.getTitulo())){
@@ -67,7 +68,7 @@ public class Biblioteca {
             
             if(dias > 0) {
                 double multa = dias * VALOR_MULTA_POR_DIA;
-                System.out.println("Você precisou pegar uma multa de R$" + multa);
+                System.out.println("Item devolvido. Você precisou pegar uma multa de R$" + multa);
             } else {
                 System.out.println("Item devolvido.");
             }
@@ -75,15 +76,7 @@ public class Biblioteca {
             emprestimo.setDataDevolucaoPrevista(hoje);
 
         }
-
-        public Usuario pesquisarPorUsuario(String id) {
-            for(Usuario usuario: this.ListadeUsuarios){
-                if(usuario.getId().equalsIgnoreCase(id)){
-                    return usuario;
-                }
-            }
-            return null;
-        }
+        
         public ItemDoAcervo pesquisarItemPorTitulo(String titulo) {
             for(ItemDoAcervo item : this.acervo){
                 if(item.getTitulo().toLowerCase().equalsIgnoreCase(titulo)){
@@ -93,28 +86,27 @@ public class Biblioteca {
             return null;
         }
 
-        public List<ItemDoAcervo> pesquisarItemPorTermo(String termo) {
-            List<ItemDoAcervo> ItemDoAcervo = new ArrayList<>();
-            for(ItemDoAcervo item : acervo) {
-                if(item.getTitulo().toLowerCase().contains(termo.toLowerCase())) {
-                    ItemDoAcervo.add(item);
+        public Usuario pesquisarPorUsuario(String id) {
+            for(Usuario usuario: this.ListadeUsuarios){
+                if(usuario.getId().equals(id)){
+                    return usuario;
                 }
             }
-            return ItemDoAcervo;
+            return null;
         }
 
         public void listarAcervo() {
             System.out.println("Livros no Acervo");
-            for(ItemDoAcervo item : acervo) {
+            for(var item : acervo) {
                 System.out.println(item);
             }
         }
-    
-        public void cadastratrarItem(ItemDoAcervo item) {
+
+         public void cadastratrarItem(ItemDoAcervo item) {
             this.acervo.add(item);
             System.out.println("O item" + item.getTitulo() + "foi cadastrado");
         }
-
+       
         public void cadastratrarUsuario(Usuario usuario) {
             this.ListadeUsuarios.add(usuario);
             System.out.println("O Usuario" + usuario.getNome() + "foi cadastrado");
@@ -133,14 +125,9 @@ public class Biblioteca {
             minhaBiblioteca.realizarDevolucao("Java como Porgramar");
             minhaBiblioteca.listarAcervo();
             Revista revistaVeja = new Revista("Veja - Abril", 2015 , 1);
-            System.out.println(revistaVeja);
-            System.out.println(livroDestruirVida);
-
-            List<ItemDoAcervo> resultado = minhaBiblioteca.pesquisarItemPorTermo("java");
-           for (ItemDoAcervo item : resultado) {
-               System.out.println("Livros encontrados");
-                System.out.println(item);
-           }
+            minhaBiblioteca.cadastrarItem(revistaVeja);
             minhaBiblioteca.listarAcervo();
+            
     }
 }
+
