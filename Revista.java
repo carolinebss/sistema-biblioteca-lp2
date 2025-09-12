@@ -1,10 +1,9 @@
 public class Revista extends ItemDoAcervo{
-
     private int edicao;
 
     public Revista(String titulo, int ano, int edicao) {
         super(titulo, ano);
-        setEdicao(edicao);        
+       this.edicao = edicao;        
     }
     public int getEdicao() {
         return edicao;
