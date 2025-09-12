@@ -3,6 +3,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+//EXERCICIO 0
+//Não faz sentido porque ItemDoAcervo é uma forma muito genérica de representar. Na prática, ele sempre será algo específico, 
+//como um Livro ou uma Revista. Essa diferenciação é importante justamente para distinguir os tipos de materiais
+//e também para representar os atributos particulares de cada um. 
+
 public class Biblioteca {
         private List<ItemDoAcervo> acervo;
         private List<Usuario> ListadeUsuarios;
@@ -130,4 +135,5 @@ public class Biblioteca {
             
     }
 }
+
 
