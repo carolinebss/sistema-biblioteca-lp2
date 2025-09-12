@@ -1,18 +1,48 @@
+import java.util.Objects;
 
 public class Usuario {
+    private String nome;
+    private String id;
 
-    public Usuario(String string, String string2) {
-        //TODO Auto-generated constructor stub
+    public Usuario(String nome, String id) {
+        setNome(nome);
+        setId(id);
     }
-
     public String getNome() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNome'");
+        return nome;
     }
-
     public String getId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+        return id;
     }
-
+    public void setNome(String nome) {
+        if(nome.isEmpty()) {
+            System.out.println("Erro: valor inválido.");
+        } else {
+            this.nome = nome;
+        }
+    }
+    public void setId(String id) {
+        if(id.isEmpty()) {
+            System.out.println("Erro: valor inválido.");
+        } else {
+            this.id = id;
+        }
+    }
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "nome='" + nome + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }
