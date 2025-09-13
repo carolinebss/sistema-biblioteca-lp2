@@ -1,13 +1,14 @@
 public class ItemDoAcervo {
     private String titulo;
     private int ano; 
-    private StatusLivro status;
+    private StatusItem status;
 
     public ItemDoAcervo(String titulo, int ano) {
         setTitulo(titulo);
         setAno(ano);
         status = StatusLivro.DISPONIVEL;
     }
+     
     public String getAno() {
         return ano;
     }
@@ -31,6 +32,13 @@ public class ItemDoAcervo {
         } else {
             this.titulo = titulo;
         }
+    }
+    
+     public int getPrazoEmprestimoDias(){
+            return 3;
+    }
+    public double getValorMultaPorDiasAtraso(){
+        return  2.0;
     }
 
     public StatusLivro getStatus() {
