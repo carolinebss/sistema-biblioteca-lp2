@@ -67,6 +67,7 @@ public class Biblioteca {
             Emprestimo emprestimo = buscarEmprestimoAtivoPorItem(item);
             if(emprestimo == null) {
                 System.out.println("Esse emprestimo não existe.");
+                return;
             }
             LocalDate hoje = LocalDate.now();
             long dias = ChronoUnit.DAYS.between(emprestimo.getDataDevolucaoPrevista(), hoje);
@@ -82,6 +83,19 @@ public class Biblioteca {
 
         }
         
+        public List<ItemDoAcervo> buscar(String termo) {
+            String termoLower = termo.toLowerCase();
+            List<ItemDoAcervo> resultados = new ArrayList<>();
+
+            for (ItemDoAcervo item : acervo) {
+                if (item.getTitulo().toLowerCase().contains(termoLower) ||
+                    (item instanceof Livro livro && livro.getAutor().toLowerCase().contains(termoLower))) {
+                    resultados.add(item);
+                }
+            }
+
+            return resultados;
+        }
         public ItemDoAcervo pesquisarItemPorTitulo(String titulo) {
             for(ItemDoAcervo item : this.acervo){
                 if(item.getTitulo().toLowerCase().equalsIgnoreCase(titulo)){
@@ -101,7 +115,7 @@ public class Biblioteca {
         }
 
         public void listarAcervo() {
-            System.out.println("Livros no Acervo");
+            System.out.println("Itens no Acervo");
             for(var item : acervo) {
                 System.out.println(item);
             }
@@ -132,8 +146,17 @@ public class Biblioteca {
             Revista revistaVeja = new Revista("Veja - Abril", 2015 , 1);
             minhaBiblioteca.cadastrarItem(revistaVeja);
             minhaBiblioteca.listarAcervo();
+
+            DVD dvd = new DVD("Era do Gelo", 2000, 120);
+            minhaBiblioteca.cadastrarItem(dvd);
+            minhaBiblioteca.listarAcervo();
+            minhaBiblioteca.realizarEmprestimo("caroline", "Era do Gelo");
+            
+            minhaBiblioteca.realizarDevolucao("Era do Gelo");
+            minhaBiblioteca.listarAcervo();    
             
     }
 }
+
 
 
