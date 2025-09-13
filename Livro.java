@@ -16,9 +16,15 @@ public class Livro extends ItemDoAcervo{
             this.autor = autor;
         }
     }
+     @Override
+    public int getPrazoEmprestimoDias() {
+        return 10;
+    }
+
     @Override
     public String toString() {
          return "Livro '" + getTitulo() + "', de " + autor + " (" + getAno() + ") - Status: " + getStatus() ;
     }
 }
+
 
