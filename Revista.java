@@ -15,4 +15,15 @@ public class Revista extends ItemDoAcervo{
     public String toString() {
          return "Revista '" + getTitulo() + " (" + getAno() + ") - Status: " + getStatus() + "Edição -" + edicao;
     }
+
+    @Override
+    public int getPrazoEmprestimoDias(){
+        return 10;
+    }
+
+    @Override
+    public double getValorMultaPorDiaAtraso() {
+        return 1.00;
+    }
+
 }
