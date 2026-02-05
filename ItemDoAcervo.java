@@ -34,12 +34,8 @@ public class ItemDoAcervo {
         }
     }
     
-    public abstract int getPrazoEmprestimoDias(){
-            return 7;
-    }
-    public abstract double getValorMultaPorDiasAtraso(){
-        return  0.5;
-    }
+    public abstract int getPrazoEmprestimoDias();
+    public abstract double getValorMultaPorDiasAtraso();
 
     public StatusLivro getStatus() {
         return status;
