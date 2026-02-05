@@ -25,6 +25,11 @@ public class Livro extends ItemDoAcervo{
     public String toString() {
          return "Livro '" + getTitulo() + "', de " + autor + " (" + getAno() + ") - Status: " + getStatus() ;
     }
+    @Override
+    public String getDadosParaBusca() {
+         return getTitulo() + " " + autor;
+    }
 }
+
 
 
