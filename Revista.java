@@ -25,5 +25,9 @@ public class Revista extends ItemDoAcervo{
     public double getValorMultaPorDiaAtraso() {
         return 1.00;
     }
+    @Override
+    public String getDadosParaBusca() {
+         return getTitulo() + " " + edicao;
+    }
 
 }
