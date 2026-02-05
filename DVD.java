@@ -28,4 +28,8 @@ public class DVD extends ItemDoAcervo {
     public String toString() {
         return "DVD '" + getTitulo() + "' (" + getAno() + ") - " + duracaoMinutos + " min - Status: " + getStatus();
     }
+    @Override
+    public String getDadosParaBusca() {
+         return getTitulo() + " " + duracaoMinutos;
+    }
 }
