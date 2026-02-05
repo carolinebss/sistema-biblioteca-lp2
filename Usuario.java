@@ -45,4 +45,5 @@ public abstract class Usuario {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+    public abstract int getLimiteDeItens();
 }
