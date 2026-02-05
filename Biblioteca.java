@@ -58,6 +58,8 @@ public class Biblioteca {
             return null;
         }
 
+        public List<livro> pesquisarLivroPorTermo
+
         public void realizarDevolucao(String titulo) {
             ItemDoAcervo item = pesquisarItemPorTitulo(titulo);
             if (item == null) {
@@ -157,6 +159,7 @@ public class Biblioteca {
             
     }
 }
+
 
 
 
