@@ -1,49 +1,80 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public abstract class Usuario {
-    private String nome;
-    private String id;
+public abstract class Usuario implements Imprimivel, Validavel {
 
-    public Usuario(String nome, String id) {
+    private String nome;
+    private String email;
+    private String senha;
+    private List<Livro> livrosEmprestados;
+
+    public Usuario(String nome, String email, String senha){
         setNome(nome);
-        setId(id);
+        setEmail(email);
+        setSenha(senha);
+        this.livrosEmprestados = new ArrayList<>(); 
+    public void adicionarLivro (Livro livro){
+        this.livrosEmprestados.add(livro);
     }
-    public String getNome() {
+
+    public List<Livro> getLivrosEmprestados() {
+        return livrosEmprestados;
+    }
+
+    public String getNome(){
         return nome;
     }
-    public String getId() {
-        return id;
-    }
+
     public void setNome(String nome) {
-        if(nome.isEmpty()) {
-            System.out.println("Erro: valor inválido.");
-        } else {
-            this.nome = nome;
+        if(nome.isEmpty()){ 
+            System.out.println("erro, campo vazio");
+        }else{
+            this.nome = nome.trim();
         }
     }
-    public void setId(String id) {
-        if(id.isEmpty()) {
-            System.out.println("Erro: valor inválido.");
+    public String getEmail(){
+        return email;
+    }
+
+    public void setEmail(String email) {
+        if (email.isEmpty()) {
+            System.out.println("erro, campo vazio");
         } else {
-            this.id = id;
+            this.email = email;
         }
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        if(senha.isEmpty()){
+            System.out.println("erro, campo vazio");
+        }else{
+            this.senha = senha;
+        }
+    }
+
     @Override
     public String toString() {
-        return "Usuario{" +
+        return "usuario{" +
                 "nome='" + nome + '\'' +
-                ", id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
                 '}';
     }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(id, usuario.id);
+        return Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha);
     }
+
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hash(nome, email, senha);
     }
-    public abstract int getLimiteDeItens();
 }
