@@ -1,3 +1,3 @@
-public enum StatusLivro {
+public enum StatusItem {
     DISPONIVEL, EMPRESTADO
 }
