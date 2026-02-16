@@ -1,35 +1,50 @@
-public class DVD extends ItemDoAcervo {
-    private int duracaoMinutos;
+public class DVD extends ItemDoAcervo implements Reservavel {
 
-    public DVD(String titulo, int ano, int duracaoMinutos) {
+    private boolean reservado;
+    private int Duracaominutos;
+
+    public int getDuracaominutos(){
+        return Duracaominutos;
+    }
+
+    public void setDuracaominutos(int duracaominutos){
+        Duracaominutos = duracaominutos;
+    }
+
+    public DVD(String titulo, int ano, int duracaominutos){
         super(titulo, ano);
-        this.duracaoMinutos = duracaoMinutos;
-    }
-
-    public int getduracaoMinutos() {
-        return duracaoMinutos;
-    }
-
-    public void setduracaoMinutos(int duracaoMinutos){
-        duracaoMinutos = duracaoMinutos;
+        setDuracaominutos(duracaominutos);
     }
 
     @Override
-    public int getPrazoEmprestimoDias() {
+    public int getPrazo() {
         return 3;
     }
-
     @Override
-    public double getValorMultaPorDiaAtraso() {
+    public double getMulta_Por_dia(){
         return 2.0;
     }
-
-   @Override
+    @Override
     public String toString() {
-        return "DVD '" + getTitulo() + "' (" + getAno() + ") - " + duracaoMinutos + " min - Status: " + getStatus();
+        return "DVD "+ getTitulo()+ ", do ano " +getAno()+" -"+getDuracaominutos()+" min - STATUS:"+getStatus();
+    }
+
+    @Override
+    public void reservar() {
+        reservado = true;
+    }
+
+    @Override
+    public void cancelarReserva() {
+        reservado = false;
+    }
+
+    public boolean isReservado() {
+        return reservado;
     }
     @Override
-    public String getDadosParaBusca() {
-         return getTitulo() + " " + duracaoMinutos;
+    public String formatarParaEtiqueta() {
+        return "DVD - " + getTitulo() + " (" + getAno() + ")";
     }
+
 }
