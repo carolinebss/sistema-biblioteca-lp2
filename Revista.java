@@ -1,33 +1,30 @@
-public class Revista extends ItemDoAcervo{
+public class Revista extends ItemDoAcervo {
     private int edicao;
 
-    public Revista(String titulo, int ano, int edicao) {
-        super(titulo, ano);
-       this.edicao = edicao;        
-    }
     public int getEdicao() {
         return edicao;
     }
     public void setEdicao(int edicao) {
         this.edicao = edicao;
     }
+    public Revista(String titulo, int ano, int edicao) {
+        super(titulo, ano);
+        setEdicao(edicao);
+    }
     @Override
     public String toString() {
-         return "Revista '" + getTitulo() + " (" + getAno() + ") - Status: " + getStatus() + "Edição -" + edicao;
+        return "Revista" + getTitulo() + ", ano" + getAno() + ", edicao=" + edicao + ", Status" + getStatus();
     }
-
     @Override
-    public int getPrazoEmprestimoDias(){
+    public int getPrazo() {
         return 10;
     }
-
     @Override
-    public double getValorMultaPorDiaAtraso() {
-        return 1.00;
+    public double getMulta_Por_dia() {
+        return 1.0;
     }
     @Override
-    public String getDadosParaBusca() {
-         return getTitulo() + " " + edicao;
+    public String formatarParaEtiqueta() {
+        return "REVISTA" + getTitulo()  + " | Edição: " + edicao;
     }
-
 }
