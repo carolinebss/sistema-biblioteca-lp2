@@ -12,8 +12,6 @@ public class Biblioteca {
         private List<ItemDoAcervo> acervo;
         private List<Usuario> ListadeUsuarios;
         private List<Emprestimo> registrosDeEmprestimos;
-        private static final int PRAZO_EMPRESTIMO_DIAS = 14;
-        private static final double VALOR_MULTA_POR_DIA = 0.75;
 
         public Biblioteca() {
             this.acervo = new ArrayList<>();
@@ -38,7 +36,7 @@ public class Biblioteca {
             }
             itemDoEmprestimo.setStatus(StatusLivro.EMPRESTADO);
             LocalDate dataEmprestimo = LocalDate.now();
-            LocalDate dataDevolucaoPrevista = dataEmprestimo.plusDays(PRAZO_EMPRESTIMO_DIAS);
+            LocalDate dataDevolucaoPrevista = dataEmprestimo.plusDays(itemDoEmprestimo.getPrazo());
             Emprestimo emprestimo = new Emprestimo(itemDoEmprestimo, usuarioDoEmprestimo, dataEmprestimo, LocalDate.now());
             registrosDeEmprestimos.add(emprestimo);
             System.out.println("Emprestimo cadastrado com sucesso.");
@@ -58,8 +56,6 @@ public class Biblioteca {
             return null;
         }
 
-        public List<livro> pesquisarLivroPorTermo
-
         public void realizarDevolucao(String titulo) {
             ItemDoAcervo item = pesquisarItemPorTitulo(titulo);
             if (item == null) {
@@ -75,7 +71,7 @@ public class Biblioteca {
             long dias = ChronoUnit.DAYS.between(emprestimo.getDataDevolucaoPrevista(), hoje);
             
             if(dias > 0) {
-                double multa = dias * VALOR_MULTA_POR_DIA;
+                double multa = dias * item.getValorMultaPorDia();
                 System.out.println("Item devolvido. Você precisou pegar uma multa de R$" + multa);
             } else {
                 System.out.println("Item devolvido.");
@@ -85,19 +81,6 @@ public class Biblioteca {
 
         }
         
-        public List<ItemDoAcervo> buscar(String termo) {
-            String termoLower = termo.toLowerCase();
-            List<ItemDoAcervo> resultados = new ArrayList<>();
-
-            for (ItemDoAcervo item : acervo) {
-                if (item.getTitulo().toLowerCase().contains(termoLower) ||
-                    (item instanceof Livro livro && livro.getAutor().toLowerCase().contains(termoLower))) {
-                    resultados.add(item);
-                }
-            }
-
-            return resultados;
-        }
         public ItemDoAcervo pesquisarItemPorTitulo(String titulo) {
             for(ItemDoAcervo item : this.acervo){
                 if(item.getTitulo().toLowerCase().equalsIgnoreCase(titulo)){
@@ -117,7 +100,7 @@ public class Biblioteca {
         }
 
         public void listarAcervo() {
-            System.out.println("Itens no Acervo");
+            System.out.println("Items no Acervo");
             for(var item : acervo) {
                 System.out.println(item);
             }
@@ -132,6 +115,28 @@ public class Biblioteca {
             this.ListadeUsuarios.add(usuario);
             System.out.println("O Usuario" + usuario.getNome() + "foi cadastrado");
         }
+
+        public void imprimirDocumento(Imprimivel objeto) {
+        System.out.println("_________________________________");
+        System.out.println(objeto.formatarParaEtiqueta());
+        System.out.println("_________________________________");
+    }
+    public void cadastrarLivro(ItemDoAcervo item) {
+
+        // verifica se o item implementa Validavel
+        if (item instanceof Validavel) {
+
+            Validavel v = (Validavel) item;
+
+            if (!v.validar()) {
+                System.out.println("Item inválido. Não cadastrado.");
+                return;
+            }
+        }
+
+        this.acervo.add(item);
+        System.out.println("O item " + item.getTitulo() + " foi cadastrado.");
+    }
         public static void main(String[] args) {
             Livro livroJavaComoProgramar = new Livro("Java como Programar", 2014, "Deitel");
             Livro livroDestruirVida = new Livro("Como destruir sua vida", 2025, "Caroline Barbosa");
@@ -155,10 +160,36 @@ public class Biblioteca {
             minhaBiblioteca.realizarEmprestimo("caroline", "Era do Gelo");
             
             minhaBiblioteca.realizarDevolucao("Era do Gelo");
-            minhaBiblioteca.listarAcervo();    
-            
+            minhaBiblioteca.listarAcervo();  
+
+             Biblioteca biblioteca = new Biblioteca();
+
+             Livro livro2 = new Livro("Java como Programar", 2014, "Deitel", "1234567891011); 
+             DVD dvd2 = new DVD("Moranguinho", 2002, 198);
+        
+             Aluno aluno1 = new Aluno("Caroline Barbosa", "26052006", "345");
+             Professor professor1 = new Professor("Thiago", "P003", "131");
+             biblioteca.cadastrarUsuario(aluno1);
+             biblioteca.cadastrarUsuario(professor1);
+              
+             biblioteca.cadastrarItem(livro2);
+             biblioteca.cadastrarItem(dvd2);
+             
+             biblioteca.imprimirDocumento(livro2);
+             biblioteca.imprimirDocumento(aluno1);
+        
+             List<Imprimivel> itens = new ArrayList<>();
+             itens.add(livro2);
+             itens.add(dvd2);
+             itens.add(aluno1);
+
+             for (Imprimivel i : itens) {
+                 System.out.println(i.formatarParaEtiqueta());
+             }
+
     }
 }
+
 
 
 
